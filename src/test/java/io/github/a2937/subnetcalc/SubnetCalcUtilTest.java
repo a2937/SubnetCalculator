@@ -3,7 +3,10 @@ package io.github.a2937.subnetcalc;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /** 
 * SubnetCalcUtil Tester. 
@@ -116,64 +119,71 @@ public void testGetMaximumNetmaskForTwoAddresses() throws Exception
 } 
 
 /** 
-* 
-* Method: convertDecimalToBinary(int decimal) 
-* 
+ *
+ * Method: convertDecimalToBinary(int decimal)
+ * In order to test the method, reflection was used.
+ * If the method name was to change, this test would
+ * no longer unless the name change was updated here too.
 */ 
 @Test
 public void testConvertDecimalToBinary() throws Exception { 
-//TODO: Test goes here... 
-/* 
+
 try { 
-   Method method = SubnetCalcUtil.getClass().getMethod("convertDecimalToBinary", int.class); 
+   Method method = SubnetCalcUtil.class.getMethod("convertDecimalToBinary", int.class);
    method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
+   String binaryReturnValue = (String)method.invoke(null, 69);
+   Assert.assertEquals("01000101",binaryReturnValue);
 } catch(NoSuchMethodException e) { 
 } catch(IllegalAccessException e) { 
 } catch(InvocationTargetException e) { 
 } 
-*/ 
+
 } 
 
 /** 
-* 
-* Method: convertBinaryToDecimal(String binary) 
-* 
+ *
+ * Method: convertBinaryToDecimal(String binary)
+ * In order to test the method, reflection was used.
+ * If the method name was to change, this test would
+ * no longer unless the name change was updated here too.
 */ 
 @Test
-public void testConvertBinaryToDecimal() throws Exception { 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = SubnetCalcUtil.getClass().getMethod("convertBinaryToDecimal", String.class); 
+public void testConvertBinaryToDecimal() throws Exception
+{
+try
+{
+   Method method = SubnetCalcUtil.class.getMethod("convertBinaryToDecimal", String.class);
    method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
+   int returnValue = (int)method.invoke(null,"1000101");
+   Assert.assertEquals(69,returnValue);
 } catch(NoSuchMethodException e) { 
 } catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
+} catch(InvocationTargetException e) {
 } 
-*/ 
+
 } 
 
 /** 
-* 
-* Method: reverse(String input) 
-* 
-*/ 
+ *
+ * Method: reverse(String input)
+ * In order to test the method, reflection was used.
+ * If the method name was to change, this test would
+ * no longer unless the name change was updated here too.
+ */
 @Test
 public void testReverse() throws Exception
 {
-//TODO: Test goes here... 
-/* 
+
 try { 
-   Method method = SubnetCalcUtil.getClass().getMethod("reverse", String.class); 
+   Method method = SubnetCalcUtil.class.getMethod("reverse", String.class);
    method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
+   String returnValue = (String)method.invoke(null, "1000101");
+   Assert.assertEquals("1010001",returnValue);
 } catch(NoSuchMethodException e) { 
 } catch(IllegalAccessException e) { 
 } catch(InvocationTargetException e) { 
 } 
-*/ 
+
 } 
 
 } 

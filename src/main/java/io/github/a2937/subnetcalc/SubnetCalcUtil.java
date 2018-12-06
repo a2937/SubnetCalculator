@@ -12,6 +12,20 @@ import java.util.List;
 public class SubnetCalcUtil
 {
 
+    /*
+    TODO Finish method
+    public static List<String> getUsableAddressesInNetwork(String networkAddress,String subNetMask)
+    {
+        List<String> ipAddresses = new ArrayList<>();
+
+        String broadCastAddress = calculateBroadCastAddress(networkAddress, subNetMask);
+        String  lastSectionString = broadCastAddress.split("\\.")[3];
+        int lastSectionNumber = Integer.parseInt(lastSectionString);
+
+        return ipAddresses;
+    }
+    */
+
     /**
      * Calculates the length of the subnet
      * mask if it is in the form ###.###.###.###
@@ -406,6 +420,9 @@ public class SubnetCalcUtil
      * This method requires a 16 bit binary string to work.
      * No separators. Just a raw set of 0s and 1s.
      */
+
+    /*
+     TODO Test hex convert methods.
     private static String convertBinaryToHex(String binary)
     {
         String reversedBinary = reverse(binary);
@@ -544,6 +561,7 @@ public class SubnetCalcUtil
         }
         return binaryString.toString();
     }
+    */
 
 
     private static String reverse(String input)
