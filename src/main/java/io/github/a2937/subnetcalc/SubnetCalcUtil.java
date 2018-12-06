@@ -126,10 +126,10 @@ public class SubnetCalcUtil
      * @param hostsCount the hosts count
      * @return the required sub net mask length for hosts
      */
-    public int  getRequiredSubNetMaskLengthForHosts(int hostsCount)
+    public static int getRequiredSubNetMaskLengthForHosts(int hostsCount)
     {
 
-        return (int)(Math.log((hostsCount))/Math.log(2)+ ((Math.log((hostsCount))%Math.log(2) == 0) ? 0 : 1));
+        return 32 - (int)(Math.log((hostsCount))/Math.log(2)+ ((Math.log((hostsCount))%Math.log(2) == 0) ? 0 : 1));
     }
 
 
@@ -162,9 +162,11 @@ public class SubnetCalcUtil
 
             try
             {
-                String maskBinary = reverse(convertDecimalToBinary(Integer.parseInt(maskOctets[i].replace(" ",""))));
+                int maskDecimal = Integer.parseInt(maskOctets[i].replace(" ",""));
+                String maskBinary = reverse(convertDecimalToBinary(maskDecimal));
 
-                String addressBinary = reverse(convertDecimalToBinary(Integer.parseInt(addressOctets[i].replace(" ",""))));
+                int addressDecimal = Integer.parseInt(addressOctets[i].replace(" ",""));
+                String addressBinary = reverse(convertDecimalToBinary(addressDecimal));
 
                 StringBuilder binaryAnded = new StringBuilder();
                 for(int w = 0; w < addressBinary.length(); w++)
@@ -305,13 +307,13 @@ public class SubnetCalcUtil
 
     /**
      * Gets the maximum amount of hosts in a subnet.
-     *
-     * @param maskLength the mask length
+     * @param maskLength the length of the subnet mask aka number of network bits
      * @return the maximum hosts in subnet
      */
     public static int getMaximumHostsInSubnet(int maskLength)
     {
-        return  2 * (32 - maskLength) - 2;
+        int hostBits = 32 - maskLength;
+        return  (int)(Math.pow(2,(hostBits)) - 2);
     }
 
     /**
@@ -365,14 +367,14 @@ public class SubnetCalcUtil
     private static String convertDecimalToBinary(int decimal)
     {
         StringBuilder binaryString = new StringBuilder();
-        int binaryNumber;
+        int binaryNumber = 0;
         while(decimal > 0)
         {
             binaryNumber = decimal % 2;
             binaryString.append(binaryNumber);
             decimal = decimal / 2;
         }
-        while(binaryString.length() != 8)
+        while(binaryString.length() < 8)
         {
             binaryString.append('0');
         }
@@ -399,17 +401,12 @@ public class SubnetCalcUtil
         return decimal;
     }
 
-    /**
-     * Convert binary to hex string.
-     *
-     * @param binary the binary
-     * @return the string
-     */
+
     /*
      * This method requires a 16 bit binary string to work.
      * No separators. Just a raw set of 0s and 1s.
      */
-    public static String convertBinaryToHex(String binary)
+    private static String convertBinaryToHex(String binary)
     {
         String reversedBinary = reverse(binary);
         StringBuilder builder = new StringBuilder();
@@ -485,13 +482,8 @@ public class SubnetCalcUtil
         return builder.toString();
     }
 
-    /**
-     * Convert hex to binary string.
-     *
-     * @param hex the hex
-     * @return the string
-     */
-    public static String convertHexToBinary(String hex)
+
+    private static String convertHexToBinary(String hex)
     {
         StringBuilder binaryString = new StringBuilder();
         for (char ch: hex.toCharArray())
